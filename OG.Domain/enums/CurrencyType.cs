@@ -1,0 +1,42 @@
+﻿namespace OG.Domain.enums
+{
+    public enum CurrencyType
+    {
+        ILS, 
+        USD, 
+        EUR, 
+        CAD, 
+        CHF, 
+        GBP, 
+        AUD, 
+        JPY, 
+        SEK, 
+        NOK, 
+        DKK, 
+        ZAR, 
+        JOD, 
+        LBP, 
+        EGP, 
+        CNY, 
+        HRK, 
+        CZK, 
+        HKD, 
+        HUF, 
+        ISK, 
+        INR, 
+        IDR, 
+        KRW, 
+        MYR, 
+        MXN, 
+        NZD, 
+        PHP, 
+        RUB, 
+        SGD, 
+        THB, 
+        RON, 
+        TRY, 
+        BGN, 
+        PLN, 
+        BRL
+    }
+}

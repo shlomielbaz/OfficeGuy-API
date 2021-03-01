@@ -1,0 +1,147 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "בקשה להצעת מחיר";
+}
+
+
+<form action="https://www.myofficeguy.com/api/accounting/documents/create/" onsubmit="javascript: formSubmit(this); return false">
+    <div class="mdl-grid">
+        <div class="mdl-cell">
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" name="customerName" id="customerName" required>
+                <label class="mdl-textfield__label" for="customerName">שם הלקוח/ה...</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="mdl-grid">
+        <div class="mdl-cell">
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="unitPrice" id="unitPrice" required>
+                <label class="mdl-textfield__label" for="unitPrice">סכום...</label>
+                <span class="mdl-textfield__error">נא להזין מחיר תקף</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mdl-grid">
+        <div class="mdl-cell">
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" name="itemName" id="itemName" required>
+                <label class="mdl-textfield__label" for="itemName">שם המוצר...</label>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mdl-grid">
+        <div class="mdl-cell" id="linkCell">
+           
+        </div>
+    </div>
+
+    <div class="mdl-grid">
+        <div class="mdl-cell">
+            <input type="submit" value="שלח בקשה" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSubmit" />
+        </div>
+    </div>
+</form>
+
+
+<dialog class="mdl-dialog" style="width: 50vw">
+    <h4 class="mdl-dialog__title">בקשה להצע"מ</h4>
+    <div class="mdl-dialog__content">
+        <p>
+            הבקשה להצע"מ הסתיימה בהצלחה<br />
+            תוכל להוריד את הקובץ בפורמט PDF בלינק "הורד קובץ" המופיע בדף
+        </p>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored close">סגור</button>
+    </div>
+</dialog>
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/polyfills/dialog-polyfill/dialog-polyfill.css" />
+}
+
+@section Scripts
+{
+    <script src="~/polyfills/dialog-polyfill/dialog-polyfill.js"></script>
+
+    <script>
+        var dialog = document.querySelector('dialog');
+
+        if (!dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+        dialog.querySelector('.close').addEventListener('click', function () {
+            dialog.close();
+        });
+    </script>
+
+    <script>
+        function formSubmit(frm) {
+
+            const request = {
+                Details: {
+                    Customer: {
+                        Name: frm['customerName'].value
+                    }
+                },
+                Items: [
+                    {
+                        Quantity: 1,
+                        UnitPrice: frm['unitPrice'].value,
+                        TotalPrice: frm['unitPrice'].value,
+                        Item: {
+                            Name: frm['itemName'].value
+                        }
+                    }
+                ],
+                Credentials: {
+                    CompanyID: 112355,
+                    APIKey: "AWrQx04WMUEpc3VKmhOmHJ4p9Fy0npMTfem2SmqtvjekdKLQqk"
+                }
+            }
+
+            fetch(frm.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json-patch+json',
+                    'accept': 'text/plain'
+                },
+                body: JSON.stringify(request),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.Data) {
+                        if (document.querySelector('#linkCell').children.length > 0) {
+                            document.querySelector('#linkCell').remove(document.querySelector('#linkCell').children[0])
+                        }
+
+                        const a = document.createElement('a');
+                        const linkText = document.createTextNode("הורד קובץ");
+                        a.appendChild(linkText);
+                        a.target = "_blank";
+                        a.title = "הורד קובץ";
+                        a.href = data.Data.DocumentDownloadURL;
+
+                        document.querySelector('#linkCell').appendChild(a);
+
+                        dialog.showModal();
+                    }
+                    else {
+                        alert('משהו השתבש, אנא נסה שוב')
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+            return false;
+        }
+    </script>
+}
