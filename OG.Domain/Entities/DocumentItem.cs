@@ -1,4 +1,4 @@
-﻿namespace OG.Domain.Entities
+﻿namespace OG.Domain.entities
 {
     public class DocumentItem
     {
