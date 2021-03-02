@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OG.Domain\OG.Domain.csproj" />
+    <ProjectReference Include="..\OG.Services\OG.Services.csproj" />
   </ItemGroup>
 
 
