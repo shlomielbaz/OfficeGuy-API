@@ -5,7 +5,7 @@
 }
 
 
-<form action="https://localhost:44369/api/bid" onsubmit="javascript: formSubmit(this); return false">
+<form action="https://localhost:44379/api/bids" onsubmit="javascript: formSubmit(this); return false">
     <div class="mdl-grid">
         <div class="mdl-cell">
             <div class="mdl-textfield mdl-js-textfield">
@@ -18,7 +18,7 @@
     <div class="mdl-grid">
         <div class="mdl-cell">
             <div class="mdl-textfield mdl-js-textfield">
-                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" name="unitPrice" id="unitPrice" required>
+                <input class="mdl-textfield__input" type="text" name="unitPrice" id="unitPrice" pattern="-?[0-9]*(\.[0-9]+)?" required>
                 <label class="mdl-textfield__label" for="unitPrice">סכום...</label>
                 <span class="mdl-textfield__error">נא להזין מחיר תקף</span>
             </div>
@@ -37,7 +37,7 @@
 
     <div class="mdl-grid">
         <div class="mdl-cell" id="linkCell">
-           
+
         </div>
     </div>
 
@@ -85,49 +85,34 @@
     <script>
         function formSubmit(frm) {
 
-            const request = {
-                Details: {
-                    Customer: {
-                        Name: frm['customerName'].value
-                    }
-                },
-                Items: [
-                    {
-                        Quantity: 1,
-                        UnitPrice: frm['unitPrice'].value,
-                        TotalPrice: frm['unitPrice'].value,
-                        Item: {
-                            Name: frm['itemName'].value
-                        }
-                    }
-                ],
-                Credentials: {
-                    CompanyID: 112355,
-                    APIKey: "AWrQx04WMUEpc3VKmhOmHJ4p9Fy0npMTfem2SmqtvjekdKLQqk"
-                }
-            }
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
 
-            fetch(frm.action, {
+            var raw = JSON.stringify({ "customerName": "B product", "itemName": "This is second product", "unitPrice": 29.99, "CompanyID": 112355, "APIKey": "AWrQx04WMUEpc3VKmhOmHJ4p9Fy0npMTfem2SmqtvjekdKLQqk" });
+
+            var requestOptions = {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json-patch+json',
-                    'accept': 'text/plain'
-                },
-                body: JSON.stringify(request),
-            })
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("https://localhost:44379/api/bids", requestOptions)
                 .then(response => response.json())
-                .then(data => {
-                    if (data.Data) {
+                .then(result => {
+
+                    const data = result.Data || result.data;
+
+                    if (data) {
                         if (document.querySelector('#linkCell').children.length > 0) {
                             document.querySelector('#linkCell').remove(document.querySelector('#linkCell').children[0])
                         }
-
                         const a = document.createElement('a');
                         const linkText = document.createTextNode("הורד קובץ");
                         a.appendChild(linkText);
                         a.target = "_blank";
                         a.title = "הורד קובץ";
-                        a.href = data.Data.DocumentDownloadURL;
+                        a.href = data.documentDownloadURL;
 
                         document.querySelector('#linkCell').appendChild(a);
 
@@ -137,9 +122,7 @@
                         alert('משהו השתבש, אנא נסה שוב')
                     }
                 })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+                .catch(error => console.log('error', error));
 
             return false;
         }

@@ -1,22 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OG.Domain.DTOs;
+using OG.Domain.Types;
 using OG.Domain.ViewModels;
 using OG.Services;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace OG.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BidController : ControllerBase
+    public class BidsController : ControllerBase
     {
-        private BidService service = new BidService();
+        private readonly IBidService service;
+        public BidsController(IBidService service)
+        {
+            this.service = service;
+        }
+
         // GET: api/<BidController>
-        [HttpGet]
+        [HttpPost]
         public Response<BidResponseDTO> GetAsync(BidRequestViewModel bid)
         {
-            return this.service.getAll(bid);
+            return this.service.Get(bid);
         }
     }
 }

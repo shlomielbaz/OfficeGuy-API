@@ -14,13 +14,13 @@ namespace OG.Services
     public class BidService: IBidService
     {
 
-        public Response<BidResponseDTO>  getAll(BidRequestViewModel bid)
+        public Response<BidResponseDTO> Get(BidRequestViewModel bid)
         {
-            using var client = new HttpClient();
+            //using var client = new HttpClient();
 
-            client.BaseAddress = new Uri("https://www.myofficeguy.com/api/accounting/documents/create/");
+            //client.BaseAddress = new Uri("https://www.myofficeguy.com/api/accounting/documents/create/");
 
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             JObject requstData = new JObject(
                 new JProperty("Details",
