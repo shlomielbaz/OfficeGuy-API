@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OG.Domain.types
+namespace OG.Domain.Types
 {
-    interface IBitService
+    public interface IBidService
     {
     }
 }

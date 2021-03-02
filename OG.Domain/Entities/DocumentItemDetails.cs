@@ -1,6 +1,7 @@
-﻿using OG.Domain.enums;
+﻿
+using OG.Domain.Enums;
 
-namespace OG.Domain.entities
+namespace OG.Domain.Entities
 {
     public class DocumentItemDetails
     {

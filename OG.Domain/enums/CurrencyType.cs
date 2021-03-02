@@ -1,4 +1,4 @@
-﻿namespace OG.Domain.enums
+﻿namespace OG.Domain.Enums
 {
     public enum CurrencyType
     {

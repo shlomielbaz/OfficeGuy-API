@@ -1,4 +1,6 @@
-﻿namespace OG.Domain.entities
+﻿using OG.Domain.Enums;
+
+namespace OG.Domain.Entities
 {
     public class Customer
     {
@@ -13,6 +15,6 @@
         public string ZipCode { get; set; }
         public string CompanyNumber { get; set; }
         public string ExternalIdentifier { get; set; }
-        public enums.SearchModeType SearchMode { get; set; }
+        public SearchModeType SearchMode { get; set; }
     }
 }
