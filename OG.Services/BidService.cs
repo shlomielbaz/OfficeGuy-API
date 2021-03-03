@@ -16,12 +16,6 @@ namespace OG.Services
 
         public Response<BidResponseDTO> Get(BidRequestViewModel bid)
         {
-            //using var client = new HttpClient();
-
-            //client.BaseAddress = new Uri("https://www.myofficeguy.com/api/accounting/documents/create/");
-
-            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
             JObject requstData = new JObject(
                 new JProperty("Details",
                     new JObject(

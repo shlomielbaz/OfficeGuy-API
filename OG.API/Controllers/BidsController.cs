@@ -16,7 +16,14 @@ namespace OG.API.Controllers
             this.service = service;
         }
 
-        // GET: api/<BidController>
+        // POST: api/<BidController>
+        [HttpGet]
+        public string GetAsync()
+        {
+            return "Welcome to bid's system";
+        }
+
+        // POST: api/<BidController>
         [HttpPost]
         public Response<BidResponseDTO> GetAsync(BidRequestViewModel bid)
         {
