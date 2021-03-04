@@ -88,8 +88,16 @@
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
-            var raw = JSON.stringify({ "customerName": "B product", "itemName": "This is second product", "unitPrice": 29.99, "CompanyID": 112355, "APIKey": "AWrQx04WMUEpc3VKmhOmHJ4p9Fy0npMTfem2SmqtvjekdKLQqk" });
+            var json = {
+                "CustomerName": frm['customerName'].value,
+                "ItemName": frm['itemName'].value,
+                "UnitPrice": +frm['unitPrice'].value,
+                "CompanyID": 112355,
+                "APIKey": "AWrQx04WMUEpc3VKmhOmHJ4p9Fy0npMTfem2SmqtvjekdKLQqk"
+            };
 
+            const raw = JSON.stringify(json);
+            
             var requestOptions = {
                 method: 'POST',
                 headers: myHeaders,

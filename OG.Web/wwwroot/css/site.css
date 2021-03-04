@@ -40,7 +40,7 @@
     border-radius: 2px;
     padding: 80px 56px;
     margin-bottom: 80px;
-    min-height: calc(100vh - 280px);
+    min-height: calc(100vh - 265px);
 }
 
 .demo-layout.is-small-screen .demo-content {

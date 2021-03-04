@@ -5,7 +5,8 @@ using System.Text;
 
 namespace OG.Domain.DTOs
 {
-    public class Response<T>: IResponse
+    public class Response<T> 
+        where T: IResponse
     {
         public T Data { get; set; }
         public int? Status { get; set; }
